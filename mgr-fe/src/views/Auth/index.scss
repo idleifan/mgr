@@ -9,17 +9,13 @@
   background-size: cover;
   background-position: center center;
 }
-a{
+/*a{
   text-decoration: none;
   color: black;
-}
-.title{
-  
-}
-
+}*/
 .auth {
   .title-info {
-    margin-top: 100px;
+    margin-top: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,6 +28,7 @@ a{
 
     h2 {
       margin: 0;
+      margin-top: 20px;
       margin-left: 18px;
     }
   }
@@ -43,25 +40,9 @@ a{
     .item {
       margin-bottom: 16px;
 
-      button {
+      button{
         width: 100%;
       }
     }
   }
-}
-.input1{
-  height: 30px;
-  width: 250px;
-  margin-top: 10px;
-  border: solid 1px;
-}
-.color-blue{
-  color: #1f8cfb;
-  cursor: pointer;
-}
-.input2{
-  height: 30px;
-  width: 250px;
-  margin-top: 10px;
-  background-image: url("../../assets/dl.png");
 }
