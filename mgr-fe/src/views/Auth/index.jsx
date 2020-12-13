@@ -1,5 +1,6 @@
 import { defineComponent, reactive } from 'vue';
 import { UserOutlined,LockOutlined } from '@ant-design/icons-vue';
+import { auth } from '@/service';
 
 export default defineComponent({
     components:{
@@ -9,19 +10,17 @@ export default defineComponent({
    
     setup(){
         const regForm = reactive({
-            acount: '',
+            account: '',
             password: '',
-            showLogin: true,
-        })
+        });
 
-        const login = (value) => {
-            console.log('login', value)
-            regForm.showLogin = value
-        }
+        const register = () => {
+            auth.register(regForm.account,regForm.password);
+        };
 
         return {
             regForm,
-            login
-        }
-    }
-})
+            register,
+        };
+    },
+});
