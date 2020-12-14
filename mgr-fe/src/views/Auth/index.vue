@@ -12,6 +12,7 @@
           <a-input 
           size="large" 
           placeholder="账户"
+          v-model:value="loginForm.account"
           >
             <template #prefix>
                <UserOutlined />
@@ -21,7 +22,7 @@
           
         </div>
         <div class="item">
-          <a-input size="large" placeholder="密码">
+          <a-input size="large" placeholder="密码"  v-model:value="loginForm.password">
             <template #prefix>
                <LockOutlined />
             
@@ -32,7 +33,10 @@
           <a href="#">忘记密码</a>
         </div>
         <div class="item">
-          <a-button size="large" type="primary">
+          <a-button size="large" 
+          type="primary"
+          @click="login"
+          >
             登录
           </a-button>
         </div>
