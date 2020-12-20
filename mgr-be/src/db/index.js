@@ -1,5 +1,8 @@
 
 require('./Schemas/User');
+require('./Schemas/lnviteCode');
+require('./Schemas/Bos');
+
 const mongoose = require('mongoose');
 
    //给哪个数据库的  

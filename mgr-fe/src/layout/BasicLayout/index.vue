@@ -2,7 +2,7 @@
     <div class="basic-layout">
     <div class="app-header">
         <div class="left">
-            <img src="../../assets/logo.png">
+            <img src="../../assets/logo.jpg">
             <div class="title">校园失物招领系统</div>
         </div>
         <div class="right">

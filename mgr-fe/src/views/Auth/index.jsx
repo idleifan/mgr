@@ -3,7 +3,7 @@ import { UserOutlined,LockOutlined } from '@ant-design/icons-vue';
 import { auth } from '@/service';
 import { result } from '@/helpers/utils';
 import { message } from 'ant-design-vue';
-
+import { useRouter } from 'vue-router';
 export default defineComponent({
     components:{
         UserOutlined,
@@ -11,6 +11,7 @@ export default defineComponent({
     },
    
     setup(){
+        const router = useRouter()
         //注册用的表单数据
         const regForm = reactive({
             account: '',
@@ -57,6 +58,11 @@ export default defineComponent({
             result(res)
             .success((data) => {
                 message.success(data.msg);
+                //console.log(' this.$router',  this.$router)
+                // this.$router.push({
+                //     name: 'Bos'
+                // })
+                router.replace('/bos');
             });
         };
 

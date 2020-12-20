@@ -2,7 +2,7 @@
   <div class="auth">
     <div class="bg"></div>
     <div class="title-info">
-      <img src="../../assets/logo.png" alt="">
+      <img src="../../assets/logo.jpg" alt="">
       <h2 class="title">失物招领系统</h2>
     </div>
     <div class="form">
