@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {getMate} = require('./helpers');
+const {getMate,preSave} = require('./helpers');
  
 const BosSchema = new mongoose.Schema({
     //报失物品
@@ -15,5 +15,7 @@ const BosSchema = new mongoose.Schema({
 
     meta:getMate(),
 });
+
+BosSchema.pre('save',preSave);
 
 mongoose.model('Bos',BosSchema);

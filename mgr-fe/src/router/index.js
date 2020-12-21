@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import Auth from '../views/Auth/index.vue'
+import store from '@/store';
+import Auth from '../views/Auth/index.vue';
 
 const routes = [
   {
@@ -17,11 +18,13 @@ const routes = [
         name: 'Bos',
         component:  () => import(/* webpackChunkName: "Bos" */ '../views/Bos/index.vue'),
       },
-      // {
-      //   path: 'users',
-      //   name: 'User',
-      //   component:  () => import(/* webpackChunkName: "Bos" */ '../views/User/index.vue'),
-      // },
+
+      {
+        path: 'bos/:id',
+        name: 'BosDetail',
+        component:  () => import(/* webpackChunkName: "BosDetail" */ '../views/BosDetail/index.vue'),
+      },
+
       {
         path: 'user',
         name: 'User',
@@ -35,6 +38,16 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach(async (to,from,next) => {
+  if (!window.characterInfo) {
+    store.dispatch('getCharacterInfo');
+
+    window.store = store;
+  }
+
+  next();
 });
 
 export default router;

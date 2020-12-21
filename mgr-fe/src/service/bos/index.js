@@ -18,3 +18,9 @@ export const remove = (id) => {
 
 export const update = (data = {}) => {
     return axios.post(`http://localhost:3000/bos/update`,data)};
+
+export const detail = (id) => {
+    return axios.get(
+        `http://localhost:3000/bos/detail/${id}`,
+    )
+}

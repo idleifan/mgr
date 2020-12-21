@@ -1,5 +1,6 @@
 import { defineComponent,ref,onMounted } from 'vue';
 import { bos } from '@/service';
+import { useRouter } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { result,formatTimestamp } from '@/helpers/utils';
 import AddOne from './AddOne/index.vue';
@@ -11,6 +12,8 @@ export default defineComponent ({
         Update,
     },
     setup() {
+        const router = useRouter();
+
         const columns = [
         {
             title: '报失物品',
@@ -91,27 +94,26 @@ export default defineComponent ({
         //删除一条失物列表
         const remove = async ({ text:record }) => {
             const { _id } = record;
+            
             const res = await bos.remove(_id);
+
             result(res)
             .success(({ msg }) => {
-                message.success(msg);
                 
-                // const idx = list.value.findIndex((item) =>{
-                //    return item._id === _id;
-                // });
-
-                // list.value.splice(idx,1);
-                getList();
             });
         };
-
+        //显示更新弹框
         const update = ( {record} ) => {
             showUpdateModal.value = true;
             curEditBos.value = record;
         };
-
+        //更新列表的某一行书集
         const updateCurBos = (newData) => {
             Object.assign(curEditBos.value, newData)
+        };
+        //进入书籍详情页
+        const toDetail = ({ record }) => {
+            router.push(`/bos/${record._id}`);
         };
 
         return {
@@ -131,6 +133,7 @@ export default defineComponent ({
             update,
             curEditBos,
             updateCurBos,
+            toDetail,
         };
     },
 });
