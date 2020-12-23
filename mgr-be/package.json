@@ -19,6 +19,7 @@
     "koa": "^2.13.0",
     "koa-body": "^4.2.0",
     "koa-cors": "^0.0.16",
+    "koa-jwt": "^4.0.0",
     "mongoose": "^5.11.6"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-card>
-            <h2>失物报失列表</h2>
+            <h2>失物招领列表</h2>
 
         <a-divider />
         <space-between>

@@ -24,11 +24,27 @@ const routes = [
         name: 'BosDetail',
         component:  () => import(/* webpackChunkName: "BosDetail" */ '../views/BosDetail/index.vue'),
       },
+      {
+        path: 'find',
+        name: 'FindLose',
+        component:  () => import(/* webpackChunkName: "Bos" */ '../views/FindLose/index.vue'),
+      },
+
+      {
+        path: 'find/:id',
+        name: 'FindDetail',
+        component:  () => import(/* webpackChunkName: "BosDetail" */ '../views/FindDetail/index.vue'),
+      },
 
       {
         path: 'user',
         name: 'User',
         component:  () => import(/* webpackChunkName: "User" */ '../views/Users/index.vue'),
+      },
+      {
+        path: 'log',
+        name: 'Log',
+        component:  () => import(/* webpackChunkName: "Log" */ '../views/Log/index.vue'),
       },
     ],
   },
@@ -41,12 +57,20 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to,from,next) => {
-  if (!window.characterInfo) {
-    store.dispatch('getCharacterInfo');
+
+  const reqArr = [];
+
+  if (!store.state.characterInfo.length) {
+    reqArr.push(store.dispatch('getCharacterInfo'));
 
     window.store = store;
   }
+  if (!store.state.userInfo.account) {
+    reqArr.push(store.dispatch('getUserInfo'));
+  }
 
+  await Promise.all(reqArr);
+  
   next();
 });
 

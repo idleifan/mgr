@@ -4,6 +4,8 @@ require('./Schemas/lnviteCode');
 require('./Schemas/Bos');
 require('./Schemas/InventoryLog');
 require('./Schemas/Character'); 
+require('./Schemas/Log');
+
 
 const mongoose = require('mongoose');
 

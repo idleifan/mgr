@@ -11,7 +11,6 @@ const router = new Router({
 
 router.get('/list',async (ctx) => {
     const list = await Character.find().exec();
-
     ctx.body = {
         data: list,
         code: 1,

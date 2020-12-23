@@ -2,7 +2,9 @@ const auth = require('./auth/index');
 const bos = require('./Bos');
 const inventoryLog = require('./inventory-log/index');
 const user = require('./user');
-const character = require('./character')
+const character = require('./character');
+const log = require('./log');
+
 
 module.exports = (app) => {
     app.use(auth.routes());
@@ -10,4 +12,6 @@ module.exports = (app) => {
     app.use(character.routes());
     app.use(user.routes());
     app.use(inventoryLog.routes());
+    app.use(log.routes());
+
 };

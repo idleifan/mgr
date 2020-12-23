@@ -2,8 +2,12 @@ import { defineComponent, reactive } from 'vue';
 import { UserOutlined,LockOutlined } from '@ant-design/icons-vue';
 import { auth } from '@/service';
 import { result } from '@/helpers/utils';
+import { getCharacterInfoById } from '@/helpers/character';
 import { message } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
+import store from '@/store';
+import { setToken } from '@/helpers/token';
+
 export default defineComponent({
     components:{
         UserOutlined,
@@ -11,7 +15,7 @@ export default defineComponent({
     },
    
     setup(){
-        const router = useRouter()
+        const router = useRouter();
         //注册用的表单数据
         const regForm = reactive({
             account: '',
@@ -56,12 +60,16 @@ export default defineComponent({
             const res =await auth.login(loginForm.account,loginForm.password)
 
             result(res)
-            .success((data) => {
-                message.success(data.msg);
-                //console.log(' this.$router',  this.$router)
-                // this.$router.push({
-                //     name: 'Bos'
-                // })
+            .success(({msg, data: { user,token } }) => {
+                message.success(msg);
+                
+                store.commit('setUserInfo',user);
+                store.commit('setUserCharacter',getCharacterInfoById(user.character));
+
+                console.log('token', token)
+                setToken(token);
+
+                window.localStorage.account = loginForm.account
                 router.replace('/bos');
             });
         };

@@ -37,12 +37,12 @@ router.post('/add', async (ctx) => {
    });
 
    const res = await bos.save();
-   const log = new InventoryLog({
-    num: Math.abs(num),
-    type,
-   });
+//    const log = new InventoryLog({
+//    // num: Math.abs(num),
+//     type,
+//    });
 
-   log.save();
+   //log.save();
    ctx.body = {
        data: res,
        code: 1,

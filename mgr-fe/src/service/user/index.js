@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { normalizeUnits } from 'moment';
+import { reactive } from 'vue';
 
 
 export const list = (page = 1,size = 20,key = '') => {
@@ -16,10 +18,11 @@ export const list = (page = 1,size = 20,key = '') => {
     };
 
 
-    export const add = (account,password) => {
+    export const add = (account,password,character) => {
         return axios.post('http://localhost:3000/user/add',{
             account,
             password,
+            character,
         });
     };
 
@@ -28,3 +31,15 @@ export const list = (page = 1,size = 20,key = '') => {
             id,
         });
     };
+
+    export const editCharacter = (characterId,userId) => {
+        return axios.post('http://localhost:3000/user/update/character', {
+            character: characterId,
+            userId: userId,
+        });
+    };
+
+    export const info = () => {
+        return axios.get('http://localhost:3000/user/info');
+    };
+    
