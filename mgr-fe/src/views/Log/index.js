@@ -1,7 +1,8 @@
 import { defineComponent,onMounted,ref } from 'vue';
 import { log } from '@/service';
-import { result } from '@/helpers/utils';
+import { result,formatTimestamp } from '@/helpers/utils';
 import { getLogInfoByPath } from '@/helpers/log';
+import { message } from 'ant-design-vue';
 
 const columns = [
     
@@ -13,10 +14,18 @@ const columns = [
             title: '动态',
             dataIndex: 'action',
         },
-        // {
-        //     title: '报失人',
-        //     dataIndex: 'author',
-        // },
+        {
+            title: '记录时间',
+            slots: {
+                customRender: 'createdAt',
+            },
+        },
+        {
+            title: '操作',
+            slots: {
+                customRender: 'action',
+            },
+        },
     
 ];
 
@@ -30,13 +39,13 @@ export default defineComponent({
         const getList = async () => {
             loading.value = true;
             
-                const res =await log.list(curPage.value,20);
+                const res = await log.list(curPage.value,20);
             loading.value = false;
                
                 result(res)
-                .success(({ data: { list:l,total:t } }) => {
+                .success(({ data: { list: l,total: t } }) => {
                     l.forEach((item) => {
-                        item.action =getLogInfoByPath(item.request.url);
+                        item.action = getLogInfoByPath(item.require.url);
                     });
 
                     list.value = l;
@@ -54,6 +63,16 @@ export default defineComponent({
             getList();
         };
 
+        const remove = async ({ _id }) => {
+            const res = await log.remove(_id);
+
+            result(res) 
+             .success(({ msg }) => {
+                message.success(msg);
+                getList();
+             });
+        };
+
         return{
             curPage,
             total,
@@ -61,6 +80,8 @@ export default defineComponent({
             columns,
             setPage,
             loading,
+            formatTimestamp,
+            remove,
         };
     },
 });

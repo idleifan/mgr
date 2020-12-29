@@ -29,9 +29,9 @@
             <template #actions="record">
                  <a href="javascript:;" @click="toDetail(record)">详情</a>
                 &nbsp;
-                <a href="javascript:;" @click="update(record)">编辑</a>
+                <a href="javascript:;" v-if="adminAuth || account === record.record.account" @click="update(record)">编辑</a>
                 &nbsp;
-                <a href="javascript:;" @click="remove(record)">删除</a>
+                <a href="javascript:;" v-if="adminAuth || account === record.record.account" @click="remove(record)">删除</a>
             </template>
          
         </a-table>
@@ -47,6 +47,7 @@
         </a-card>
         <add-one 
         v-model:show="show"
+        @update="updateAddOne"
         />
          <update 
         v-model:show="showUpdateModal"

@@ -19,6 +19,9 @@ export default defineComponent({
         author:'',
         publishDate:0,
         classify:'',
+        feature: '', // 特征
+        loseDate:0, // 丢失时间
+        loserPhoneNum:'', // 失主联系方式
 
     });
 
@@ -27,8 +30,10 @@ export default defineComponent({
        };
 
        watch(() => props.bos,(current) =>{
+           console.log('current', current)
         Object.assign(editForm,current);
         editForm.publishDate = moment(Number(editForm.publishDate));
+        editForm.loseDate = moment(Number(editForm.loseDate));
        });
 
        const submit = async () => {
@@ -39,6 +44,9 @@ export default defineComponent({
            author:editForm.author,
            publishDate: editForm.publishDate.valueOf(),
            classify:editForm.classify,
+           feature: editForm.feature, // 特征
+           loseDate: editForm.loseDate.valueOf(), // 丢失时间
+           loserPhoneNum: editForm.loserPhoneNum, // 失主联系方式
        });
 
        result(res)

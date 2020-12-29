@@ -5,6 +5,8 @@ import { message } from 'ant-design-vue';
 import { result,formatTimestamp } from '@/helpers/utils';
 import AddOne from './AddOne/index.vue';
 import Update from './Update/index.vue';
+import store from '@/store';
+
 
 export default defineComponent ({
     components:{
@@ -18,6 +20,10 @@ export default defineComponent ({
         {
             title: '报失物品',
             dataIndex: 'name',
+        },
+        {
+            title: '报失特征',
+            dataIndex: 'feature',
         },
         {
             title: '报失地点',
@@ -99,7 +105,7 @@ export default defineComponent ({
 
             result(res)
             .success(({ msg }) => {
-                
+                getList()
             });
         };
         //显示更新弹框
@@ -110,15 +116,25 @@ export default defineComponent ({
         //更新列表的某一行书集
         const updateCurBos = (newData) => {
             Object.assign(curEditBos.value, newData)
+            getList()
         };
+
+        const updateAddOne = (newData) => {
+            show.value = false;
+            getList()
+        }
         //进入书籍详情页
         const toDetail = ({ record }) => {
+            console.log('record', record)
             router.push(`/bos/${record._id}`);
         };
 
         return {
             columns,
             show,
+            updateAddOne,
+            adminAuth: store.state.userCharacter.name === 'admin',
+            account: store.state.userInfo.account,
             list,
             formatTimestamp,
             curPage,

@@ -1,15 +1,18 @@
 import { defineComponent,reactive } from 'vue';
-import { bos } from '@/service';
+import { findLose } from '@/service';
 import { result,clone } from '@/helpers/utils';
 import { message } from 'ant-design-vue';
-
+import store from '@/store';
 const defaultFormData = {
     name:'',
     price:'',
     author:'',
     publishDate:0,
     classify:'',
-
+    account: store.state.userInfo.account,
+    feature: '', // 特征
+    handDate:0, // 上交时间
+    authorPhoneNum:'', // 失主联系方式
 };
 
 export default defineComponent({
@@ -23,12 +26,14 @@ export default defineComponent({
        const submit = async () => {
           const form = clone(addForm);
           form.publishDate = addForm.publishDate.valueOf();
-          const res = await bos.add(form);
+          form.handDate = addForm.handDate.valueOf();
+          const res = await findLose.add(form);
 
           result(res)
           .success((d, { data }) => {
               Object.assign(addForm,defaultFormData);
-             message.success(data.msg);
+                message.success(data.msg);
+                context.emit('update:show',false);
           });
        };
 

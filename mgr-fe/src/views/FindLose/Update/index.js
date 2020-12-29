@@ -1,5 +1,5 @@
 import { defineComponent,reactive,watch } from 'vue';
-import { bos } from '@/service';
+import { findLose } from '@/service';
 import { result,clone } from '@/helpers/utils';
 import { message } from 'ant-design-vue';
 import moment from "moment";
@@ -19,7 +19,9 @@ export default defineComponent({
         author:'',
         publishDate:0,
         classify:'',
-
+        feature: '', // 特征
+        handDate:0, // 上交时间
+        authorPhoneNum:'', // 失主联系方式
     });
 
        const close = () => {
@@ -29,16 +31,20 @@ export default defineComponent({
        watch(() => props.bos,(current) =>{
         Object.assign(editForm,current);
         editForm.publishDate = moment(Number(editForm.publishDate));
+        editForm.handDate = moment(Number(editForm.handDate));
        });
 
        const submit = async () => {
-       const res = await bos.update({
+       const res = await findLose.update({
            id: props.bos._id,
            name:editForm.name,
            price:editForm.price,
            author:editForm.author,
            publishDate: editForm.publishDate.valueOf(),
            classify:editForm.classify,
+           feature: editForm.feature, // 特征
+            handDate: editForm.handDate.valueOf(), // 上交时间
+            authorPhoneNum: editForm.authorPhoneNum, // 失主联系方式
        });
 
        result(res)

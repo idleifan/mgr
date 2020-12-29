@@ -2,7 +2,7 @@
     <div>
         <a-card>
             <space-between>
-                <h2>{{ d.name }}</h2>
+                <h2>捡拾物名称：{{ d.name }}</h2>
                 <div>
                     <a-button size="small" type="primary" @click="showUpdateModal = true">编辑</a-button>
                     &nbsp;
@@ -14,12 +14,26 @@
             <div class="base-info">
                 <div class="items">
                     <div class="item">
-                        <div class="title">报失地点</div>
+                        <div class="title">捡拾物特征</div>
+                        <div class="content">{{ d.feature }}</div>
+                    </div>
+                    <div class="item">
+                        <div class="title">捡拾物地点</div>
                         <div class="content">{{ d.price }}</div>
                     </div>
                     <div class="item">
-                        <div class="title">报失人</div>
+                        <div class="title">捡拾物上交时间</div>
+                        <div class="content">{{ formatTimestamp(d.handDate) }}</div>
+                    </div>
+                </div>
+                <div class="items">
+                    <div class="item">
+                        <div class="title">捡拾人姓名</div>
                         <div class="content">{{ d.author }}</div>
+                    </div>
+                    <div class="item">
+                        <div class="title">捡拾人联系方式</div>
+                        <div class="content">{{ d.authorPhoneNum }}</div>
                     </div>
                     <div class="item">
                         <div class="title">分类</div>
@@ -29,14 +43,14 @@
                 <div class="items">
                     
                     <div class="item">
-                        <div class="title">报失时间</div>
+                        <div class="title">捡拾时间</div>
                         <div class="content">{{ formatTimestamp(d.publishDate) }}</div>
                     </div>
                     
                 </div>
             </div>
         </a-card>
-        <a-card>
+        <!-- <a-card>
             <div class="log">
                 <a-card title="招领日志">
                     <template #extra>
@@ -66,7 +80,7 @@
                     </div>
                 </a-card>
             </div>
-        </a-card>
+        </a-card> -->
         <update
         v-model:show="showUpdateModal"
         :bos="d"

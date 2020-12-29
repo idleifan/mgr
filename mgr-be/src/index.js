@@ -15,9 +15,10 @@ connect().then(() =>{
     app.use(koaBody());
 
     app.use(catchTokenError);
-    app.use(logMiddleware);
 
     koajwtMiddleware(app);
+    app.use(logMiddleware);
+
     registerRoutes(app);
 
    

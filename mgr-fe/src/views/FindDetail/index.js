@@ -1,10 +1,11 @@
 import { defineComponent,onMounted,ref } from 'vue';
 import { useRoute,useRouter } from 'vue-router';
 import { result,formatTimestamp } from '@/helpers/utils';
-import { bos, inventoryLog } from '@/service';
+import { findLose, inventoryLog } from '@/service';
 import { CheckOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
-import Update from '@/views/Bos/Update/index.vue';
+import Update from '@/views/FindLose/Update/index.vue';
+import store from '@/store';
 
 const columns = [
     {
@@ -39,7 +40,7 @@ export default defineComponent({
 
         // 获取失物详细信息
         const getDetail = async () => {
-            const res = await bos.detail(id);
+            const res = await findLose.detail(id);
 
             result(res)
             .success(({ data }) => {
@@ -85,6 +86,7 @@ export default defineComponent({
 
         return{
             d: detailInfo,
+            adminAuth: store.state.userCharacter.name === 'admin',
             formatTimestamp,
             remove,
             showUpdateModal,

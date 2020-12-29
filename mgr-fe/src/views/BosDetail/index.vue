@@ -2,8 +2,8 @@
     <div>
         <a-card>
             <space-between>
-                <h2>{{ d.name }}</h2>
-                <div>
+                <h2>报失物品：{{ d.name }}</h2>
+                <div v-if="adminAuth || account === d.account">
                     <a-button size="small" type="primary" @click="showUpdateModal = true">编辑</a-button>
                     &nbsp;
                     <a-button size="small" type="danger" @click="remove">删除</a-button>
@@ -14,12 +14,27 @@
             <div class="base-info">
                 <div class="items">
                     <div class="item">
+                        <div class="title">报失物品特征</div>
+                        <div class="content">{{ d.feature }}</div>
+                    </div>
+                    <div class="item">
                         <div class="title">报失地点</div>
                         <div class="content">{{ d.price }}</div>
                     </div>
                     <div class="item">
+                        <div class="title">丢失时间</div>
+                        <div class="content">{{ formatTimestamp(d.loseDate) }}</div>
+                    </div>
+                </div>
+                <div class="items">
+                    
+                    <div class="item">
                         <div class="title">报失人</div>
                         <div class="content">{{ d.author }}</div>
+                    </div>
+                    <div class="item">
+                        <div class="title">失主联系方式</div>
+                        <div class="content">{{ d.loserPhoneNum }}</div>
                     </div>
                     <div class="item">
                         <div class="title">分类</div>
@@ -36,7 +51,7 @@
                 </div>
             </div>
         </a-card>
-        <a-card>
+        <!-- <a-card>
             <div class="log">
                 <a-card title="招领日志">
                     <template #extra>
@@ -66,7 +81,7 @@
                     </div>
                 </a-card>
             </div>
-        </a-card>
+        </a-card> -->
         <update
         v-model:show="showUpdateModal"
         :bos="d"

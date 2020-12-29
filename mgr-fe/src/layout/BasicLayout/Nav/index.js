@@ -1,6 +1,8 @@
 import { ref,defineComponent,onMounted } from 'vue';
 import { useRouter,useRoute } from 'vue-router';
 import menu from '@/config/menu';
+import store from '@/store';
+
 
 export default defineComponent ({
     setup() {
@@ -17,8 +19,9 @@ export default defineComponent ({
         };
 
         return {
+            adminAuth: store.state.userCharacter.name === 'admin',
             openKeys,
-            selectedKeys,menu,
+            selectedKeys, menu,
             menu,
             to,
         };

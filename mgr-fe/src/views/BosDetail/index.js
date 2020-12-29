@@ -5,6 +5,7 @@ import { bos, inventoryLog } from '@/service';
 import { CheckOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
 import Update from '@/views/Bos/Update/index.vue';
+import store from '@/store';
 
 const columns = [
     {
@@ -85,6 +86,8 @@ export default defineComponent({
 
         return{
             d: detailInfo,
+            adminAuth: store.state.userCharacter.name === 'admin',
+            account: store.state.userInfo.account,
             formatTimestamp,
             remove,
             showUpdateModal,

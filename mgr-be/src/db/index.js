@@ -5,6 +5,10 @@ require('./Schemas/Bos');
 require('./Schemas/InventoryLog');
 require('./Schemas/Character'); 
 require('./Schemas/Log');
+require('./Schemas/FindLose');
+require('./Schemas/LogResponse');
+
+
 
 
 const mongoose = require('mongoose');

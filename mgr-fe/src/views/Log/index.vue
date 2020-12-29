@@ -13,7 +13,12 @@
                 :data-source='list'
                 :pagination="false"
                 >
-
+                <template #createdAt="{ record }">
+                    {{formatTimestamp(record.meta.createdAt)}}
+                </template>
+                <template #action="{ record }">
+                    <a href="javascript:;" @click="remove(record)">删除</a>
+                </template>
                 </a-table>
             </div>
 

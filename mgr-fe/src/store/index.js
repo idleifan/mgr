@@ -20,7 +20,7 @@ export default createStore({
     },
 
     setUserCharacter(state,userCharacter) {
-      state.setUserCharacter = userCharacter;
+      state.userCharacter = userCharacter;
     },
 
     setCurrentAccount(state,currentAccount) {

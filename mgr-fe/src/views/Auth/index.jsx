@@ -62,14 +62,14 @@ export default defineComponent({
             result(res)
             .success(({msg, data: { user,token } }) => {
                 message.success(msg);
+                window.localStorage.account = loginForm.account
                 
                 store.commit('setUserInfo',user);
-                store.commit('setUserCharacter',getCharacterInfoById(user.character));
+                store.commit('setUserCharacter', getCharacterInfoById(user.character));
 
                 console.log('token', token)
                 setToken(token);
 
-                window.localStorage.account = loginForm.account
                 router.replace('/bos');
             });
         };

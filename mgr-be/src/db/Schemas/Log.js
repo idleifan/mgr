@@ -10,9 +10,12 @@ const LogSchema = new mongoose.Schema({
     require: {
         method: String,
         url: String,
-        responseBody: String,
         status: Number,
     },
+
+    startTime: Number,
+    endTime: Number,
+
     meta:getMate(),
 });
 

@@ -9,8 +9,7 @@ const router = new Router({
     prefix: '/log',
 });
 
-router.get('list',async (ctx) => {
-    console.log('list1111')
+router.get('/list',async (ctx) => {
     let {
         page,
         size,
@@ -18,13 +17,15 @@ router.get('list',async (ctx) => {
 
     page = Number(page);
     size = Number(size);
-
     const list = await Log
       .find()
+      .sort({
+          _id: -1,
+      })
       .skip((page -1) * size)
       .limit(size)
       .exec();
-    console.log('list', list)
+
       const total = await Log.countDocuments().exec();
 
     ctx.body = {
@@ -36,6 +37,22 @@ router.get('list',async (ctx) => {
         },
         code: 1,
         msg: '获取列表成功',
+    };
+});
+
+router.post('/delete',async(ctx) =>{
+    const {
+        id,
+    } =ctx.request.body;
+
+    const res = await Log.deleteOne({
+        _id: id,
+    });
+
+    ctx.body = {
+        code:1,
+        msg: '删除成功',
+        data: res,
     };
 });
 

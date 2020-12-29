@@ -1,10 +1,11 @@
 import { defineComponent,ref,onMounted } from 'vue';
-import { bos } from '@/service';
+import { findLose } from '@/service';
 import { useRouter } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { result,formatTimestamp } from '@/helpers/utils';
 import AddOne from './AddOne/index.vue';
 import Update from './Update/index.vue';
+import store from '@/store';
 
 export default defineComponent ({
     components:{
@@ -16,19 +17,19 @@ export default defineComponent ({
 
         const columns = [
         {
-            title: '报失物品',
+            title: '捡拾物名称',
             dataIndex: 'name',
         },
         {
-            title: '报失地点',
+            title: '捡拾物地点',
             dataIndex: 'price',
         },
         {
-            title: '报失人',
+            title: '捡拾人姓名',
             dataIndex: 'author',
         },
         {
-            title: '报失时间',
+            title: '捡拾时间',
             dataIndex: 'publishDate',
             slots: {
                 customRender: 'publishDate',
@@ -49,6 +50,7 @@ export default defineComponent ({
 
         const show = ref(false);
         const showUpdateModal = ref(false);
+        const adminAuth = ref(false) // 管理员权限
         const list = ref([]);
         const total = ref(0);
         const curPage = ref(1);
@@ -58,9 +60,10 @@ export default defineComponent ({
 
         //获取失物列表
         const getList = async () => {
-            const res = await bos.list({
+            const res = await findLose.list({
                 page: curPage.value,
                 size: 10,
+                account: store.state.userCharacter.name === 'admin' ? null : store.state.userInfo.account,
                 key: key.value,
             });
 
@@ -95,11 +98,11 @@ export default defineComponent ({
         const remove = async ({ text:record }) => {
             const { _id } = record;
             
-            const res = await bos.remove(_id);
+            const res = await findLose.remove(_id);
 
             result(res)
             .success(({ msg }) => {
-                
+                getList();
             });
         };
         //显示更新弹框
@@ -111,14 +114,22 @@ export default defineComponent ({
         const updateCurBos = (newData) => {
             Object.assign(curEditBos.value, newData)
         };
+
+        const updateAddOne = ()=>{
+            show.value = false
+            getList();
+        }
+
         //进入书籍详情页
         const toDetail = ({ record }) => {
-            router.push(`/bos/${record._id}`);
+            router.push(`/find/${record._id}`);
         };
 
         return {
             columns,
             show,
+            updateAddOne,
+            adminAuth: store.state.userCharacter.name === 'admin',
             list,
             formatTimestamp,
             curPage,

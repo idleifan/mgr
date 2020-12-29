@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const {getMate,preSave} = require('./helpers');
  
-const BosSchema = new mongoose.Schema({
+const FindLoseSchema = new mongoose.Schema({
     //报失物品
     name: String,
     //报失地点
@@ -16,15 +16,12 @@ const BosSchema = new mongoose.Schema({
     account: String,
 
     feature: String, // 特征
-
-    loseDate: String, // 丢失时间
-
-    loserPhoneNum: String, // 失主联系方式
-
+    handDate: String, // 上交时间
+    authorPhoneNum: String, // 失主联系方式
 
     meta:getMate(),
 });
 
-BosSchema.pre('save',preSave);
+FindLoseSchema.pre('save',preSave);
 
-mongoose.model('Bos',BosSchema);
+mongoose.model('FindLose',FindLoseSchema);

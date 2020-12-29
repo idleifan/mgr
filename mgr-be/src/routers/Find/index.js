@@ -2,11 +2,11 @@ const Router = require('@koa/router');
 const mongoose = require('mongoose');
 const {getBody} = require('../../helpers/utils');
 
-const Bos = mongoose.model('Bos');
+const FindLose = mongoose.model('FindLose');
 const InventoryLog = mongoose.model('InventoryLog');
 
 const findBosOne = async (id) => {
-    const one = await Bos.findOne({
+    const one = await FindLose.findOne({
         _id: id, 
     }).exec();
 
@@ -16,35 +16,36 @@ const findBosOne = async (id) => {
 
 
 const router = new Router({
-    prefix: '/bos'
+    prefix: '/findLose'
 });
 
 router.post('/add', async (ctx) => { 
    const {
       name,
-      feature,
-      loseDate,
-      loserPhoneNum,
       price,
       author,
       publishDate,
       classify,
       account,
+      feature, // 特征
+      handDate, // 上交时间
+      authorPhoneNum, // 失主联系方式
    } = getBody(ctx);
-   console.log('ctx', ctx)
-   const bos = new Bos({
+   console.log('ctx')
+   const findLose = new FindLose({
     name,
     price,
     author,
     publishDate,
     classify,
-    feature,
-    loseDate,
-    loserPhoneNum,
     account,
+    feature, // 特征
+    handDate, // 上交时间
+    authorPhoneNum, // 失主联系方式
    });
 
-   const res = await bos.save();
+   const res = await findLose.save();
+//    console.log('res', res)
 //    const log = new InventoryLog({
 //    // num: Math.abs(num),
 //     type,
@@ -63,6 +64,7 @@ router.get('/list',async (ctx) => {
     const {
         page = 1,
         key = '',
+        account = '',
     }= ctx.query;
     
     let = {
@@ -77,7 +79,11 @@ router.get('/list',async (ctx) => {
         query.name = key;
     }
 
-   const list = await Bos
+    if (account) {
+        query.account = account;
+    }
+
+   const list = await FindLose
    .find(query)
     .sort({
         _id:-1,
@@ -85,8 +91,7 @@ router.get('/list',async (ctx) => {
    .skip((page - 1) * size)
    .limit(size)
    .exec();
-
-   const total = await Bos.countDocuments();
+   const total = await FindLose.countDocuments();
 
    ctx.body = {
     data: {
@@ -106,7 +111,7 @@ router.delete('/:id', async (ctx) => {
       id,
   } = ctx.params;
 
-  const delMsg = await Bos.deleteOne({
+  const delMsg = await FindLose.deleteOne({
       _id: id,
   });
 
